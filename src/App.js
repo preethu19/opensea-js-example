@@ -6,28 +6,51 @@ import { OrderSide, WyvernSchemaName } from 'opensea-js/lib/types'
 import Web3 from 'web3';
 import { ethers } from "ethers"
 import Navigation from './Navbar.js'
+import detectEthereumProvider from '@metamask/detect-provider'
+
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
-const provider = new HDWalletProvider({
-    mnemonic: "better custom whisper wave chapter helmet kick power require castle frog picture",
-    providerOrUrl: "https://rinkeby.infura.io/v3/be296185674548aaa1153abab140512b",
-    addressIndex: 1
-});
+
+// const provider = new HDWalletProvider({
+//     mnemonic: "better custom whisper wave chapter helmet kick power require castle frog picture",
+//     providerOrUrl: "https://rinkeby.infura.io/v3/be296185674548aaa1153abab140512b",
+//     addressIndex: 1
+// });
+
+// const provider = await detectEthereumProvider()
 
 
+// const web3 = new Web3(provider)
 
-const web3 = new Web3(provider)
+// //const provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/be296185674548aaa1153abab140512b')
 
-//const provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/be296185674548aaa1153abab140512b')
+// const seaport = new OpenSeaPort(provider, {
+//   networkName: Network.Rinkeby,
+//   apiKey: "5bec8ae0372044cab1bef0d866c98618"
+// })
 
-const seaport = new OpenSeaPort(provider, {
-  networkName: Network.Rinkeby,
-  apiKey: "5bec8ae0372044cab1bef0d866c98618"
-})
-
-
+// https://mainnet.infura.io/v3/be296185674548aaa1153abab140512b
 
 function App() {
+
+  let seaport;
+  let web3;
+  let provider;
+
+  const init = async() =>{
+    provider = await detectEthereumProvider()
+
+
+    web3 = new Web3(provider)
+
+    //const provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/be296185674548aaa1153abab140512b')
+
+    seaport = new OpenSeaPort(provider, {
+      networkName: Network.Rinkeby,
+      apiKey: "5bec8ae0372044cab1bef0d866c98618"
+    })
+
+  }
 
   const [assets, setAssets] = useState("");
   const [asset, setAsset] = useState();
@@ -89,18 +112,19 @@ function App() {
     
 
   useEffect( async()=>{
+    await init()
    await web3Handler()
    console.log("All assets:")
    await getAllAssets("")
    //await setTokenAddress(assets.assets[0].tokenAddress)
    //await setTokenId(assets.assets[0].tokenId)
    await setTokenAddress("0x88B48F654c30e99bc2e4A1559b4Dcf1aD93FA656")
-   await setTokenId("85101716527489200964561093658122220458119461830071050062355304213666030682113")
-   console.log("Get asset:")
-   await getSpecificAsset(tokenAddress, token_id)
-   console.log("Get price:")
-   await getAssetOrder(tokenAddress, token_id)
-   console.log("Create buy order")
+  //  await setTokenId("85101716527489200964561093658122220458119461830071050062355304213666030682113")
+  //  console.log("Get asset:")
+  //  await getSpecificAsset(tokenAddress, token_id)
+  //  console.log("Get price:")
+  //  await getAssetOrder(tokenAddress, token_id)
+  //  console.log("Create buy order")
    await createBuyOrder(tokenAddress, token_id, price, account)
     // const a = await seaport.api.getAsset({
     //   tokenAddress: tokenAddress, // CryptoKitties
