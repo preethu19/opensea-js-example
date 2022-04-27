@@ -1,5 +1,5 @@
 {
-  "name": "opensea-js-app",
+  "name": "opensea-js-sdk",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,13 +8,12 @@
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
     "@truffle/hdwallet-provider": "^2.0.7",
-    "ethers": "^5.6.4",
     "opensea-js": "^3.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^2.1.0",
-    "web3": "^1.2.1"
+    "web3": "^1.7.3"
   },
   "scripts": {
     "start": "react-scripts start",

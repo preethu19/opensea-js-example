@@ -1,6 +1,3 @@
-
-
-
 const Navigation = ({ web3Handler, account }) => {
     return(
         <div>
